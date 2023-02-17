@@ -10,6 +10,8 @@ const { writeJSON } = fs;
 const INITIAL_ID_XKCD_COMIC = 2650;
 const MAX_ID_XKCD_COMIC = 2738;
 
+const indexFileContent = [];
+
 for (
   let comicId = INITIAL_ID_XKCD_COMIC;
   comicId <= MAX_ID_XKCD_COMIC;
@@ -29,9 +31,11 @@ for (
     width,
     ...restOfComic,
   };
+  indexFileContent.push(comicToStore);
   const jsonFile = `./comics/${id}.json`;
   await writeJSON(jsonFile, comicToStore);
   log(`Wrote ${jsonFile}! ✅ \n`);
 }
-
+await writeJSON("./comics/index.json", indexFileContent);
+log(`Wrote index content! ✅ \n`);
 endTime();
